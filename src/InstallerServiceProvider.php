@@ -25,6 +25,11 @@ class InstallerServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        // Force session driver to 'file' for installer routes to prevent DB errors
+        if (request()->is('install') || request()->is('install/*')) {
+            config(['session.driver' => 'file']);
+        }
+
         $this->loadRoutesFrom(__DIR__ . '/routes/web.php');
         $this->loadViewsFrom(__DIR__ . '/views', 'installer');
         $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
