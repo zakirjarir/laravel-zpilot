@@ -227,7 +227,38 @@
             color: #fff;
         }
 
-        /* ... footer styling ... */
+        .alert {
+            padding: 20px;
+            border-radius: 20px;
+            margin-bottom: 30px;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        .alert-error {
+            background: rgba(239, 68, 68, 0.15);
+            color: #ff4d4d;
+            border: 1px solid rgba(239, 68, 68, 0.4);
+            box-shadow: 0 10px 30px -10px rgba(239, 68, 68, 0.3);
+            animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both;
+        }
+
+        .alert-success {
+            background: rgba(16, 185, 129, 0.15);
+            color: #34d399;
+            border: 1px solid rgba(16, 185, 129, 0.4);
+            box-shadow: 0 10px 30px -10px rgba(16, 185, 129, 0.3);
+        }
+
+        @keyframes shake {
+            10%, 90% { transform: translate3d(-1px, 0, 0); }
+            20%, 80% { transform: translate3d(2px, 0, 0); }
+            30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
+            40%, 60% { transform: translate3d(4px, 0, 0); }
+        }
     </style>
 </head>
 <body>
@@ -246,7 +277,10 @@
         <div class="content">
             @if(session('message'))
                 <div class="alert alert-error">
-                    {{ session('message') }}
+                    <svg style="width: 24px; height: 24px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    <span>{{ session('message') }}</span>
                 </div>
             @endif
 
