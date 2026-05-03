@@ -12,6 +12,41 @@ class RequirementsChecker
     private $minPhpVersion = '8.1.0';
 
     /**
+     * Get requirements from composer.json.
+     *
+     * @return array
+     */
+    public function getRequirements()
+    {
+        $composerPath = base_path('composer.json');
+        if (!file_exists($composerPath)) {
+            return [
+                'php' => '8.1.0',
+                'extensions' => ['openssl', 'pdo', 'mbstring', 'tokenizer', 'JSON', 'cURL']
+            ];
+        }
+
+        $composer = json_decode(file_get_contents($composerPath), true);
+        $requires = $composer['require'] ?? [];
+        
+        $phpVersion = '8.1.0';
+        $extensions = ['openssl', 'pdo', 'mbstring', 'tokenizer', 'JSON', 'cURL'];
+
+        foreach ($requires as $package => $version) {
+            if ($package === 'php') {
+                $phpVersion = str_replace(['^', '>=', '>'], '', $version);
+            } elseif (str_starts_with($package, 'ext-')) {
+                $extensions[] = str_replace('ext-', '', $package);
+            }
+        }
+
+        return [
+            'php' => $phpVersion,
+            'extensions' => array_unique($extensions)
+        ];
+    }
+
+    /**
      * Check for the server requirements.
      *
      * @param array $requirements
@@ -20,26 +55,17 @@ class RequirementsChecker
     public function check(array $requirements)
     {
         $results = [];
+        $minPhp = $requirements['php'] ?? '8.1.0';
 
-        foreach ($requirements as $type => $requirement) {
-            switch ($type) {
-                // Check PHP version
-                case 'php':
-                    $results['php'] = [
-                        'full' => phpversion(),
-                        'current' => phpversion(),
-                        'minimum' => $this->minPhpVersion,
-                        'supported' => version_compare(phpversion(), $this->minPhpVersion, '>='),
-                    ];
-                    break;
+        $results['php'] = [
+            'full' => phpversion(),
+            'current' => phpversion(),
+            'minimum' => $minPhp,
+            'supported' => version_compare(phpversion(), $minPhp, '>='),
+        ];
 
-                // Check PHP extensions
-                case 'extensions':
-                    foreach ($requirement as $extension) {
-                        $results['extensions'][$extension] = extension_loaded($extension);
-                    }
-                    break;
-            }
+        foreach ($requirements['extensions'] as $extension) {
+            $results['extensions'][$extension] = extension_loaded($extension);
         }
 
         return $results;

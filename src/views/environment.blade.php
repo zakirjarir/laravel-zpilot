@@ -22,6 +22,9 @@
             @endforeach
         </div>
 
-        <button type="submit" class="btn">Save & Continue</button>
+        <div class="btn-group">
+            <a href="{{ route('installer.requirements') }}" class="btn btn-back">Back</a>
+            <button type="submit" class="btn">Save & Continue</button>
+        </div>
     </form>
 @endsection

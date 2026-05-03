@@ -33,17 +33,8 @@ class InstallerController extends Controller
 
     public function requirements()
     {
-        $requirements = $this->requirementsChecker->check([
-            'php' => '8.1.0',
-            'extensions' => [
-                'openssl',
-                'pdo',
-                'mbstring',
-                'tokenizer',
-                'JSON',
-                'cURL',
-            ],
-        ]);
+        $dynamicRequirements = $this->requirementsChecker->getRequirements();
+        $requirements = $this->requirementsChecker->check($dynamicRequirements);
 
         $permissions = $this->requirementsChecker->checkPermissions([
             'storage/framework/'     => '775',

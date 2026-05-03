@@ -25,7 +25,10 @@
                 </div>
             </div>
 
-            <button type="submit" class="btn">Start Installation</button>
+            <div class="btn-group">
+                <a href="{{ route('installer.environment') }}" class="btn btn-back">Back</a>
+                <button type="submit" class="btn">Start Installation</button>
+            </div>
             <p style="margin-top: 15px; font-size: 0.85rem;">This may take a few seconds...</p>
         </form>
     </div>

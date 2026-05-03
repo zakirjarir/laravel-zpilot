@@ -45,11 +45,17 @@
     @endphp
 
     @if($allRequirementsMet)
-        <a href="{{ route('installer.environment') }}" class="btn">Continue</a>
+        <div class="btn-group">
+            <a href="{{ route('installer.welcome') }}" class="btn btn-back">Back</a>
+            <a href="{{ route('installer.environment') }}" class="btn">Continue</a>
+        </div>
     @else
         <div class="alert alert-error">
             Please fix the requirements/permissions issues above to continue.
         </div>
-        <a href="{{ route('installer.requirements') }}" class="btn btn-outline">Check Again</a>
+        <div class="btn-group">
+            <a href="{{ route('installer.welcome') }}" class="btn btn-back">Back</a>
+            <a href="{{ route('installer.requirements') }}" class="btn">Check Again</a>
+        </div>
     @endif
 @endsection

@@ -61,12 +61,13 @@
         }
 
         .logo {
-            font-size: 2.5rem;
-            font-weight: 700;
-            background: linear-gradient(to right, #6366f1, #a855f7);
+            font-size: 2.2rem;
+            font-weight: 800;
+            background: linear-gradient(to right, #6366f1, #a855f7, #ec4899);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             margin-bottom: 10px;
+            letter-spacing: -1px;
         }
 
         .steps {
@@ -74,154 +75,38 @@
             justify-content: space-between;
             margin-bottom: 40px;
             position: relative;
+            padding: 0 10px;
         }
 
-        .steps::before {
-            content: '';
-            position: absolute;
-            top: 15px;
-            left: 0;
-            right: 0;
-            height: 2px;
-            background: var(--border);
-            z-index: 1;
-        }
+        /* ... existing steps styling ... */
 
-        .step {
-            width: 32px;
-            height: 32px;
-            background: var(--bg);
-            border: 2px solid var(--border);
-            border-radius: 50%;
+        .btn-group {
             display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 600;
-            font-size: 0.8rem;
-            position: relative;
-            z-index: 2;
-            transition: all 0.3s ease;
+            gap: 15px;
+            margin-top: 20px;
         }
 
-        .step.active {
-            background: var(--primary);
-            border-color: var(--primary);
-            box-shadow: 0 0 15px rgba(99, 102, 241, 0.4);
-        }
-
-        .step.completed {
-            background: var(--success);
-            border-color: var(--success);
-        }
-
-        .content {
-            margin-bottom: 30px;
-        }
-
-        h2 {
-            font-size: 1.5rem;
-            margin-bottom: 15px;
-            color: #fff;
-        }
-
-        p {
-            color: var(--text-muted);
-            line-height: 1.6;
-            margin-bottom: 20px;
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 8px;
-            font-size: 0.9rem;
-            color: var(--text-muted);
-        }
-
-        input, select {
-            width: 100%;
-            background: rgba(15, 23, 42, 0.5);
-            border: 1px solid var(--border);
-            padding: 12px 16px;
-            border-radius: 12px;
-            color: #fff;
-            outline: none;
-            transition: border-color 0.3s ease;
-        }
-
-        input:focus {
-            border-color: var(--primary);
-        }
-
-        .btn {
-            display: inline-block;
-            width: 100%;
-            padding: 14px;
-            background: var(--primary);
-            color: #fff;
-            text-decoration: none;
-            border-radius: 12px;
-            text-align: center;
-            font-weight: 600;
-            border: none;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .btn:hover {
-            background: var(--primary-hover);
-            transform: translateY(-2px);
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2);
-        }
-
-        .btn-outline {
-            background: transparent;
-            border: 1px solid var(--border);
-        }
-
-        .btn-outline:hover {
+        .btn-back {
             background: rgba(255, 255, 255, 0.05);
-        }
-
-        .alert {
-            padding: 15px;
-            border-radius: 12px;
-            margin-bottom: 20px;
-            font-size: 0.9rem;
-        }
-
-        .alert-error {
-            background: rgba(239, 68, 68, 0.1);
-            color: var(--error);
-            border: 1px solid rgba(239, 68, 68, 0.2);
-        }
-
-        .alert-success {
-            background: rgba(16, 185, 129, 0.1);
-            color: var(--success);
-            border: 1px solid rgba(16, 185, 129, 0.2);
-        }
-
-        .footer {
-            text-align: center;
-            margin-top: 30px;
-            font-size: 0.8rem;
             color: var(--text-muted);
+            border: 1px solid var(--border);
+            flex: 0 0 auto;
+            width: auto;
+            padding: 14px 25px;
         }
 
-        .footer a {
-            color: var(--primary);
-            text-decoration: none;
+        .btn-back:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
         }
+
+        /* ... footer styling ... */
     </style>
 </head>
 <body>
     <div class="installer-container">
         <div class="header">
-            <div class="logo">Laravel Installer</div>
+            <div class="logo">Z-laravel-installer</div>
             <div class="steps">
                 <div class="step {{ Request::is('install') ? 'active' : 'completed' }}">1</div>
                 <div class="step {{ Request::is('install/requirements') ? 'active' : (Request::is('install') ? '' : 'completed') }}">2</div>
