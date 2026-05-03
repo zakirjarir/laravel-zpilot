@@ -226,9 +226,8 @@
                 <div class="step {{ Request::is('install') ? 'active' : 'completed' }}">1</div>
                 <div class="step {{ Request::is('install/requirements') ? 'active' : (Request::is('install') ? '' : 'completed') }}">2</div>
                 <div class="step {{ Request::is('install/environment') ? 'active' : (Request::is('install') || Request::is('install/requirements') ? '' : 'completed') }}">3</div>
-                <div class="step {{ Request::is('install/database') ? 'active' : (Request::is('install/seeder') || Request::is('install/finish') ? 'completed' : '') }}">4</div>
-                <div class="step {{ Request::is('install/seeder') ? 'active' : (Request::is('install/finish') ? 'completed' : '') }}">5</div>
-                <div class="step {{ Request::is('install/finish') ? 'active' : '' }}">6</div>
+                <div class="step {{ Request::is('install/database') ? 'active' : (Request::is('install/environment') ? '' : 'completed') }}">4</div>
+                <div class="step {{ Request::is('install/finish') ? 'active' : '' }}">5</div>
             </div>
         </div>
 

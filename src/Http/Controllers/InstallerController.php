@@ -107,32 +107,23 @@ class InstallerController extends Controller
 
     public function database()
     {
-        return view('installer::database');
+        return view('installer::process');
     }
 
-    public function runMigrations()
+    public function runInstallation(Request $request)
     {
         try {
-            Artisan::call('config:clear');
+            // 1. Run Migrations
             Artisan::call('migrate', ['--force' => true]);
-            return redirect()->route('installer.seeder');
-        } catch (\Exception $e) {
-            return back()->with(['message' => $e->getMessage()]);
-        }
-    }
+            
+            // 2. Run Seeders if requested
+            if ($request->has('run_seed')) {
+                Artisan::call('db:seed', ['--force' => true]);
+            }
 
-    public function seeder()
-    {
-        return view('installer::seeder');
-    }
-
-    public function runSeeders()
-    {
-        try {
-            Artisan::call('db:seed', ['--force' => true]);
             return redirect()->route('installer.finish');
         } catch (\Exception $e) {
-            return back()->with(['message' => $e->getMessage()]);
+            return back()->with(['message' => 'Installation failed: ' . $e->getMessage()]);
         }
     }
 
