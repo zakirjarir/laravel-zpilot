@@ -56,8 +56,8 @@ class InstallerController extends Controller
 
     public function environment()
     {
-        $envContent = $this->environmentManager->getEnvContent();
-        return view('installer::environment', compact('envContent'));
+        $envValues = $this->environmentManager->getEnvExampleValues();
+        return view('installer::environment', compact('envValues'));
     }
 
     public function saveEnvironment(Request $request)
@@ -66,7 +66,9 @@ class InstallerController extends Controller
         $this->setDatabaseConfig($request);
 
         try {
-            $this->createDatabaseIfNotExists($request->database_name);
+            if ($request->has('DB_DATABASE')) {
+                $this->createDatabaseIfNotExists($request->DB_DATABASE);
+            }
         } catch (\Exception $e) {
             return back()->with(['message' => 'Database creation failed: ' . $e->getMessage()]);
         }
@@ -83,12 +85,12 @@ class InstallerController extends Controller
     private function setDatabaseConfig($request)
     {
         config(['database.connections.setup' => [
-            'driver' => $request->database_connection,
-            'host' => $request->database_host,
-            'port' => $request->database_port,
+            'driver' => $request->DB_CONNECTION ?? 'mysql',
+            'host' => $request->DB_HOST ?? '127.0.0.1',
+            'port' => $request->DB_PORT ?? '3306',
             'database' => null, // Connect without DB first
-            'username' => $request->database_username,
-            'password' => $request->database_password,
+            'username' => $request->DB_USERNAME ?? 'root',
+            'password' => $request->DB_PASSWORD ?? '',
             'charset' => 'utf8mb4',
             'collation' => 'utf8mb4_unicode_ci',
             'prefix' => '',

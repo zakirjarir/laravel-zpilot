@@ -4,56 +4,22 @@
 
 @section('content')
     <h2>Environment Configuration</h2>
-    <p>Please provide your basic application and database settings.</p>
+    <p>We've detected the following variables from your <code>.env.example</code>. Please provide the values for your new environment.</p>
 
     <form action="{{ route('installer.saveEnvironment') }}" method="POST">
         @csrf
-        <div class="form-group">
-            <label>App Name</label>
-            <input type="text" name="app_name" value="Laravel" required>
-        </div>
-
-        <div class="form-group">
-            <label>App URL</label>
-            <input type="text" name="app_url" value="http://localhost" required>
-        </div>
-
-        <div style="margin: 25px 0; border-top: 1px solid var(--border); padding-top: 25px;">
-            <h3 style="font-size: 1.1rem; margin-bottom: 15px;">Database Settings</h3>
-            
-            <div class="form-group">
-                <label>Connection</label>
-                <select name="database_connection">
-                    <option value="mysql" selected>MySQL</option>
-                    <option value="sqlite">SQLite</option>
-                    <option value="pgsql">PostgreSQL</option>
-                </select>
-            </div>
-
-            <div class="form-group">
-                <label>Host</label>
-                <input type="text" name="database_host" value="127.0.0.1" required>
-            </div>
-
-            <div class="form-group">
-                <label>Port</label>
-                <input type="text" name="database_port" value="3306" required>
-            </div>
-
-            <div class="form-group">
-                <label>Database Name</label>
-                <input type="text" name="database_name" value="laravel" required>
-            </div>
-
-            <div class="form-group">
-                <label>Username</label>
-                <input type="text" name="database_username" value="root" required>
-            </div>
-
-            <div class="form-group">
-                <label>Password</label>
-                <input type="password" name="database_password" value="">
-            </div>
+        
+        <div style="max-height: 400px; overflow-y: auto; padding-right: 10px; margin-bottom: 30px; border-bottom: 1px solid var(--border);">
+            @foreach($envValues as $key => $value)
+                <div class="form-group">
+                    <label>{{ str_replace('_', ' ', $key) }} <small style="opacity: 0.6;">({{ $key }})</small></label>
+                    <input type="{{ str_contains(strtolower($key), 'password') ? 'password' : 'text' }}" 
+                           name="{{ $key }}" 
+                           value="{{ $value }}" 
+                           placeholder="Enter {{ strtolower(str_replace('_', ' ', $key)) }}"
+                           {{ in_array($key, ['APP_NAME', 'DB_DATABASE', 'DB_USERNAME']) ? 'required' : '' }}>
+                </div>
+            @endforeach
         </div>
 
         <button type="submit" class="btn">Save & Continue</button>
