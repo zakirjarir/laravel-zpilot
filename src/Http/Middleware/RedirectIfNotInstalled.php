@@ -17,6 +17,7 @@ class RedirectIfNotInstalled
     public function handle(Request $request, Closure $next)
     {
         if (!file_exists(storage_path('installed')) && !$request->is('install') && !$request->is('install/*')) {
+            config(['session.driver' => 'file']);
             return redirect()->route('installer.welcome');
         }
 
