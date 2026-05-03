@@ -23,8 +23,11 @@ class InstallerServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot()
+    public function boot(\Illuminate\Routing\Router $router)
     {
+        // Automatically redirect to installer if not installed
+        $router->pushMiddlewareToGroup('web', \ZakirJarir\LaravelInstaller\Http\Middleware\RedirectIfNotInstalled::class);
+
         // Ensure .env exists to prevent application crash
         $envManager = new \ZakirJarir\LaravelInstaller\Helpers\EnvironmentManager();
         $envManager->ensureEnvExists();

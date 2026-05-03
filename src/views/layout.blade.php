@@ -259,9 +259,51 @@
             30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
             40%, 60% { transform: translate3d(4px, 0, 0); }
         }
+        /* Loading Overlay */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(11, 15, 26, 0.85);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            z-index: 9999;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid var(--border);
+            border-top: 4px solid var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        .loading-text {
+            color: #fff;
+            font-weight: 600;
+            font-size: 1.1rem;
+            letter-spacing: 1px;
+        }
+
+        body.is-loading { pointer-events: none; }
     </style>
 </head>
 <body>
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="spinner"></div>
+        <div class="loading-text">Processing, please wait...</div>
+    </div>
+
     <div class="installer-container">
         <div class="header">
             <div class="logo">Z-laravel-installer</div>
@@ -292,5 +334,25 @@
             &bull; &copy; {{ date('Y') }}
         </div>
     </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const forms = document.querySelectorAll('form');
+            const overlay = document.getElementById('loadingOverlay');
+            
+            forms.forEach(form => {
+                form.addEventListener('submit', function() {
+                    overlay.style.display = 'flex';
+                    document.body.classList.add('is-loading');
+                    
+                    const buttons = form.querySelectorAll('button, .btn');
+                    buttons.forEach(btn => {
+                        if(btn.tagName === 'BUTTON') btn.disabled = true;
+                        btn.style.opacity = '0.7';
+                        btn.style.cursor = 'not-allowed';
+                    });
+                });
+            });
+        });
+    </script>
 </body>
 </html>
