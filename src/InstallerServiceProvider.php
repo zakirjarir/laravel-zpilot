@@ -25,17 +25,17 @@ class InstallerServiceProvider extends ServiceProvider
      */
     public function boot(\Illuminate\Routing\Router $router)
     {
+        // If not installed, force session driver to 'file' to prevent DB errors on startup
+        if (!file_exists(storage_path('installed'))) {
+            config(['session.driver' => 'file']);
+        }
+
         // Automatically redirect to installer if not installed
         $router->pushMiddlewareToGroup('web', \ZakirJarir\LaravelInstaller\Http\Middleware\RedirectIfNotInstalled::class);
 
         // Ensure .env exists to prevent application crash
         $envManager = new \ZakirJarir\LaravelInstaller\Helpers\EnvironmentManager();
         $envManager->ensureEnvExists();
-
-        // Force session driver to 'file' for installer routes to prevent DB errors
-        if (request()->is('install') || request()->is('install/*')) {
-            config(['session.driver' => 'file']);
-        }
 
         $this->loadRoutesFrom(__DIR__ . '/routes/web.php');
         $this->loadViewsFrom(__DIR__ . '/views', 'installer');
