@@ -41,8 +41,8 @@
                     <div style="margin-bottom: 10px; color: var(--text-muted); font-size: 0.85rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px;">Detected Packages</div>
                     @foreach($detectedPackages as $package)
                         <div style="display: flex; align-items: center; margin-bottom: 15px; padding-left: 10px;">
-                            <input type="checkbox" name="setup_packages[]" value="{{ $package['command'] }}" id="pkg_{{ loop->index }}" checked style="width: 18px; height: 18px; margin-right: 15px; accent-color: var(--primary);">
-                            <label for="pkg_{{ loop->index }}" style="color: #fff; font-weight: 500; cursor: pointer; margin-bottom: 0; text-transform: none; letter-spacing: 0;">Setup {{ $package['name'] }}</label>
+                            <input type="checkbox" name="setup_packages[]" value="{{ $package['command'] }}" id="pkg_{{ $loop->index }}" checked style="width: 18px; height: 18px; margin-right: 15px; accent-color: var(--primary);">
+                            <label for="pkg_{{ $loop->index }}" style="color: #fff; font-weight: 500; cursor: pointer; margin-bottom: 0; text-transform: none; letter-spacing: 0;">Setup {{ $package['name'] }}</label>
                         </div>
                     @endforeach
                 @endif
