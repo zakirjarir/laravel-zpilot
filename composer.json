@@ -6,8 +6,19 @@
     "authors": [
         {
             "name": "Zakir Jarir",
-            "email": "zakirjarir@gmail.com"
+            "email": "zakirjarir@gmail.com",
+            "homepage": "https://github.com/zakirjarir",
+            "role": "Developer"
         }
+    ],
+    "keywords": [
+        "laravel",
+        "installer",
+        "setup",
+        "wizard",
+        "gui",
+        "environment",
+        "database"
     ],
     "require": {
         "php": "^8.1",
