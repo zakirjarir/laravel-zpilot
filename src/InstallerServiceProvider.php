@@ -25,6 +25,10 @@ class InstallerServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        // Ensure .env exists to prevent application crash
+        $envManager = new \ZakirJarir\LaravelInstaller\Helpers\EnvironmentManager();
+        $envManager->ensureEnvExists();
+
         // Force session driver to 'file' for installer routes to prevent DB errors
         if (request()->is('install') || request()->is('install/*')) {
             config(['session.driver' => 'file']);

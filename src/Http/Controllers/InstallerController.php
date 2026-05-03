@@ -100,7 +100,31 @@ class InstallerController extends Controller
 
     public function database()
     {
-        return view('installer::process');
+        $detectedPackages = $this->detectSetupRequiredPackages();
+        return view('installer::process', compact('detectedPackages'));
+    }
+
+    private function detectSetupRequiredPackages()
+    {
+        $commands = Artisan::all();
+        $setupList = [];
+
+        $packages = [
+            'jwt:secret' => 'JWT Authentication',
+            'passport:install' => 'Laravel Passport',
+            'sanctum:install' => 'Laravel Sanctum',
+            'telescope:install' => 'Laravel Telescope',
+            'horizon:install' => 'Laravel Horizon',
+            'filament:install' => 'Filament Admin',
+        ];
+
+        foreach ($packages as $command => $name) {
+            if (array_key_exists($command, $commands)) {
+                $setupList[] = ['command' => $command, 'name' => $name];
+            }
+        }
+
+        return $setupList;
     }
 
     public function runInstallation(Request $request)
@@ -112,6 +136,16 @@ class InstallerController extends Controller
             // 2. Run Seeders if requested
             if ($request->has('run_seed')) {
                 Artisan::call('db:seed', ['--force' => true]);
+            }
+
+            // 3. Generate Application Key
+            Artisan::call('key:generate', ['--force' => true]);
+
+            // 4. Run Detected Package Commands (JWT, Passport, etc.)
+            if ($request->has('setup_packages')) {
+                foreach ($request->setup_packages as $command) {
+                    Artisan::call($command, ['--force' => true]);
+                }
             }
 
             return redirect()->route('installer.finish');

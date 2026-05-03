@@ -27,6 +27,22 @@ class EnvironmentManager
     }
 
     /**
+     * Ensure .env file exists.
+     */
+    public function ensureEnvExists()
+    {
+        if (!file_exists($this->envPath)) {
+            if (file_exists($this->envExamplePath)) {
+                copy($this->envExamplePath, $this->envPath);
+            } else {
+                // Generate a basic default .env if example is also missing
+                $defaultEnv = "APP_NAME=Laravel\nAPP_ENV=local\nAPP_KEY=base64:".base64_encode(random_bytes(32))."\nAPP_DEBUG=true\nAPP_URL=http://localhost\n\nDB_CONNECTION=mysql\nDB_HOST=127.0.0.1\nDB_PORT=3306\nDB_DATABASE=laravel\nDB_USERNAME=root\nDB_PASSWORD=\n\nSESSION_DRIVER=file\nCACHE_STORE=file\n";
+                file_put_contents($this->envPath, $defaultEnv);
+            }
+        }
+    }
+
+    /**
      * Get the content of the .env file.
      *
      * @return string
