@@ -82,7 +82,7 @@ class InstallerController extends Controller
 
     private function setDatabaseConfig($request)
     {
-        Config::set('database.connections.setup', [
+        config(['database.connections.setup' => [
             'driver' => $request->database_connection,
             'host' => $request->database_host,
             'port' => $request->database_port,
@@ -92,13 +92,17 @@ class InstallerController extends Controller
             'charset' => 'utf8mb4',
             'collation' => 'utf8mb4_unicode_ci',
             'prefix' => '',
-        ]);
+        ]]);
+
+        // Refresh connection with new config
+        DB::purge('setup');
     }
 
     private function createDatabaseIfNotExists($dbName)
     {
-        $query = "CREATE DATABASE IF NOT EXISTS `$dbName` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;";
-        DB::connection('setup')->statement($query);
+        // Try to connect and execute creation
+        $pdo = DB::connection('setup')->getPdo();
+        $pdo->exec("CREATE DATABASE IF NOT EXISTS `$dbName` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;");
     }
 
     public function database()
