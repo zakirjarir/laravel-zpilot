@@ -6,6 +6,7 @@ use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Config;
 use ZakirJarir\LaravelInstaller\Helpers\EnvironmentManager;
 use ZakirJarir\LaravelInstaller\Helpers\RequirementsChecker;
 
@@ -61,6 +62,15 @@ class InstallerController extends Controller
 
     public function saveEnvironment(Request $request)
     {
+        // Set dynamic config to attempt DB connection/creation
+        $this->setDatabaseConfig($request);
+
+        try {
+            $this->createDatabaseIfNotExists($request->database_name);
+        } catch (\Exception $e) {
+            return back()->with(['message' => 'Database creation failed: ' . $e->getMessage()]);
+        }
+
         $result = $this->environmentManager->saveFileWizard($request);
         
         if ($result === "Success") {
@@ -68,6 +78,27 @@ class InstallerController extends Controller
         }
 
         return back()->with(['message' => $result]);
+    }
+
+    private function setDatabaseConfig($request)
+    {
+        Config::set('database.connections.setup', [
+            'driver' => $request->database_connection,
+            'host' => $request->database_host,
+            'port' => $request->database_port,
+            'database' => null, // Connect without DB first
+            'username' => $request->database_username,
+            'password' => $request->database_password,
+            'charset' => 'utf8mb4',
+            'collation' => 'utf8mb4_unicode_ci',
+            'prefix' => '',
+        ]);
+    }
+
+    private function createDatabaseIfNotExists($dbName)
+    {
+        $query = "CREATE DATABASE IF NOT EXISTS `$dbName` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;";
+        DB::connection('setup')->statement($query);
     }
 
     public function database()
@@ -78,6 +109,7 @@ class InstallerController extends Controller
     public function runMigrations()
     {
         try {
+            Artisan::call('config:clear');
             Artisan::call('migrate', ['--force' => true]);
             return redirect()->route('installer.seeder');
         } catch (\Exception $e) {

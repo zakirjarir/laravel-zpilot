@@ -52,21 +52,19 @@ class EnvironmentManager
      */
     public function saveFileWizard(Request $input)
     {
-        $settings = $input->all();
-
         $envFileData =
-            'APP_NAME=' . ($settings['app_name'] ?? 'Laravel') . "\n" .
-            'APP_ENV=' . ($settings['app_env'] ?? 'local') . "\n" .
-            'APP_KEY=' . ($settings['app_key'] ?? 'base64:fH7N6Z3B6oF6V/S+Q7m9T6+p6p6p6p6p6p6p6p6p6p6=') . "\n" .
-            'APP_DEBUG=' . ($settings['app_debug'] ?? 'true') . "\n" .
-            'APP_URL=' . ($settings['app_url'] ?? 'http://localhost') . "\n\n" .
+            'APP_NAME="' . ($input->app_name ?? 'Laravel') . "\"\n" .
+            'APP_ENV=' . ($input->app_env ?? 'local') . "\n" .
+            'APP_KEY=base64:' . base64_encode(random_bytes(32)) . "\n" .
+            'APP_DEBUG=' . ($input->app_debug ?? 'true') . "\n" .
+            'APP_URL=' . ($input->app_url ?? 'http://localhost') . "\n\n" .
             'LOG_CHANNEL=stack' . "\n\n" .
-            'DB_CONNECTION=' . ($settings['database_connection'] ?? 'mysql') . "\n" .
-            'DB_HOST=' . ($settings['database_host'] ?? '127.0.0.1') . "\n" .
-            'DB_PORT=' . ($settings['database_port'] ?? '3306') . "\n" .
-            'DB_DATABASE=' . ($settings['database_name'] ?? 'laravel') . "\n" .
-            'DB_USERNAME=' . ($settings['database_username'] ?? 'root') . "\n" .
-            'DB_PASSWORD=' . ($settings['database_password'] ?? '') . "\n\n" .
+            'DB_CONNECTION=' . ($input->database_connection ?? 'mysql') . "\n" .
+            'DB_HOST=' . ($input->database_host ?? '127.0.0.1') . "\n" .
+            'DB_PORT=' . ($input->database_port ?? '3306') . "\n" .
+            'DB_DATABASE=' . ($input->database_name ?? 'laravel') . "\n" .
+            'DB_USERNAME=' . ($input->database_username ?? 'root') . "\n" .
+            'DB_PASSWORD="' . ($input->database_password ?? '') . "\"\n\n" .
             'BROADCAST_DRIVER=log' . "\n" .
             'CACHE_DRIVER=file' . "\n" .
             'QUEUE_CONNECTION=sync' . "\n" .
@@ -76,7 +74,7 @@ class EnvironmentManager
         try {
             file_put_contents($this->envPath, $envFileData);
         } catch (Exception $e) {
-            return "Unable to save the .env file, please create it manually.";
+            return "Unable to save the .env file, please check permissions.";
         }
 
         return "Success";
