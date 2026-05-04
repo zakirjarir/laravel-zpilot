@@ -35,10 +35,12 @@
             color: var(--text);
             min-height: 100vh;
             display: flex;
+            flex-direction: column;
             align-items: center;
-            justify-content: center;
-            padding: 20px;
+            justify-content: flex-start;
+            padding: 60px 20px;
             line-height: 1.5;
+            overflow-x: hidden;
         }
 
         .zpilot-container {
@@ -49,9 +51,10 @@
             -webkit-backdrop-filter: blur(20px);
             border: 1px solid var(--border);
             border-radius: 28px;
-            padding: 40px;
+            padding: 45px;
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
             animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            margin: auto 0;
         }
 
         @keyframes slideUp {
@@ -329,8 +332,8 @@
             @yield('content')
         </div>
 
-        <div class="footer">
-            Developed by <a href="https://github.com/zakirjarir" target="_blank">Zakir Jarir</a>
+        <div class="footer" style="margin-top: 40px; text-align: center; font-size: 0.85rem; color: var(--text-muted); opacity: 0.8;">
+            Developed by <a href="https://github.com/zakirjarir" target="_blank" style="color: var(--primary); text-decoration: none; font-weight: 600;">Zakir Jarir</a>
             &bull; &copy; {{ date('Y') }}
         </div>
     </div>

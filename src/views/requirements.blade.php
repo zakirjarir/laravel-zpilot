@@ -6,31 +6,76 @@
     <h2>Server Requirements</h2>
     <p>Please make sure your server meets the following requirements.</p>
 
-    <div style="margin-bottom: 30px;">
-        <h3 style="font-size: 1.1rem; margin-bottom: 10px; color: #fff;">PHP Version</h3>
-        <div style="display: flex; justify-content: space-between; align-items: center; background: rgba(255,255,255,0.05); padding: 12px; border-radius: 12px; margin-bottom: 20px;">
+    <style>
+        .requirement-list {
+            max-height: 400px;
+            overflow-y: auto;
+            padding-right: 15px;
+            margin: 20px 0 30px 0;
+        }
+        .requirement-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255,255,255,0.05);
+            padding: 12px 18px;
+            border-radius: 14px;
+            margin-bottom: 8px;
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
+        }
+        .requirement-item:hover {
+            background: rgba(255,255,255,0.08);
+            border-color: rgba(255,255,255,0.15);
+        }
+        .requirement-list::-webkit-scrollbar { width: 6px; }
+        .requirement-list::-webkit-scrollbar-track { background: transparent; }
+        .requirement-list::-webkit-scrollbar-thumb { background: var(--border); border-radius: 10px; }
+        
+        .req-section-title {
+            font-size: 0.95rem;
+            font-weight: 700;
+            margin: 25px 0 12px;
+            color: #fff;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .req-section-title::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--border);
+        }
+    </style>
+
+    <div class="requirement-list">
+        <h3 class="req-section-title">PHP Version</h3>
+        <div class="requirement-item">
             <span>Required: {{ $requirements['php']['minimum'] }}+</span>
-            <span style="font-weight: 600; color: {{ $requirements['php']['supported'] ? 'var(--success)' : 'var(--error)' }}">
+            <span style="font-weight: 700; color: {{ $requirements['php']['supported'] ? 'var(--success)' : 'var(--error)' }}">
                 {{ $requirements['php']['current'] }}
                 {!! $requirements['php']['supported'] ? '✓' : '✗' !!}
             </span>
         </div>
 
-        <h3 style="font-size: 1.1rem; margin-bottom: 10px; color: #fff;">Extensions</h3>
+        <h3 class="req-section-title">Extensions</h3>
         @foreach($requirements['extensions'] as $ext => $enabled)
-            <div style="display: flex; justify-content: space-between; align-items: center; background: rgba(255,255,255,0.05); padding: 10px 12px; border-radius: 8px; margin-bottom: 8px;">
-                <span>{{ ucfirst($ext) }}</span>
-                <span style="color: {{ $enabled ? 'var(--success)' : 'var(--error)' }}">
+            <div class="requirement-item">
+                <span style="font-weight: 500;">{{ ucfirst($ext) }}</span>
+                <span style="font-weight: 700; color: {{ $enabled ? 'var(--success)' : 'var(--error)' }}">
                     {!! $enabled ? '✓' : '✗' !!}
                 </span>
             </div>
         @endforeach
 
-        <h3 style="font-size: 1.1rem; margin: 25px 0 10px; color: #fff;">Permissions</h3>
+        <h3 class="req-section-title">Permissions</h3>
         @foreach($permissions['permissions'] as $path => $perm)
-            <div style="display: flex; justify-content: space-between; align-items: center; background: rgba(255,255,255,0.05); padding: 10px 12px; border-radius: 8px; margin-bottom: 8px;">
-                <span style="font-size: 0.9rem;">{{ $path }}</span>
-                <span style="color: {{ $perm['isSet'] ? 'var(--success)' : 'var(--error)' }}">
+            <div class="requirement-item">
+                <span style="font-size: 0.9rem; font-family: monospace; opacity: 0.8;">{{ $path }}</span>
+                <span style="font-weight: 700; color: {{ $perm['isSet'] ? 'var(--success)' : 'var(--error)' }}">
                     {{ $perm['permission'] }}
                     {!! $perm['isSet'] ? '✓' : '✗' !!}
                 </span>

@@ -3,34 +3,56 @@
 @section('title', 'Environment Setup')
 
 <style>
-    .zpilot-container { max-width: 850px !important; } /* Increasing width for this page */
+    .zpilot-container { max-width: 850px !important; }
+    .env-list {
+        max-height: 450px;
+        overflow-y: auto;
+        padding-right: 15px;
+        margin: 20px 0 30px 0;
+        background: rgba(0, 0, 0, 0.2);
+        border-radius: 20px;
+        border: 1px solid var(--border);
+    }
     .env-row {
         display: flex;
         align-items: center;
-        padding: 12px 0;
+        padding: 18px 20px;
         border-bottom: 1px solid var(--border);
-        gap: 20px;
+        transition: background 0.3s ease;
     }
+    .env-row:last-child { border-bottom: none; }
+    .env-row:hover { background: rgba(255, 255, 255, 0.02); }
+    
     .env-key {
-        flex: 0 0 250px;
-        color: var(--text-muted);
-        font-size: 0.85rem;
+        flex: 0 0 280px;
+    }
+    .env-label {
+        color: #fff;
+        font-size: 0.9rem;
         font-weight: 600;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
+        display: block;
+    }
+    .env-sub {
+        color: var(--text-muted);
+        font-size: 0.7rem;
+        opacity: 0.6;
+        margin-top: 3px;
+        font-family: monospace;
     }
     .env-value {
         flex: 1;
     }
     .env-value input {
         margin-bottom: 0 !important;
+        background: rgba(255, 255, 255, 0.05);
+        padding: 12px 16px;
     }
-    .env-list {
-        max-height: 500px;
-        overflow-y: auto;
-        padding-right: 15px;
-        margin-bottom: 30px;
-    }
+    
+    /* Custom Scrollbar */
+    .env-list::-webkit-scrollbar { width: 6px; }
+    .env-list::-webkit-scrollbar-track { background: transparent; }
+    .env-list::-webkit-scrollbar-thumb { background: var(--border); border-radius: 10px; }
+    .env-list::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
 </style>
 
 @section('content')
@@ -44,8 +66,8 @@
             @foreach($envValues as $key => $value)
                 <div class="env-row">
                     <div class="env-key">
-                        {{ str_replace('_', ' ', $key) }}
-                        <div style="font-size: 0.7rem; opacity: 0.5; margin-top: 2px;">{{ $key }}</div>
+                        <span class="env-label">{{ str_replace('_', ' ', $key) }}</span>
+                        <span class="env-sub">{{ $key }}</span>
                     </div>
                     <div class="env-value">
                         <input type="{{ str_contains(strtolower($key), 'password') ? 'password' : 'text' }}" 
