@@ -1,4 +1,4 @@
-@extends('installer::layout')
+@extends('zpilot::layout')
 
 @section('title', 'Installation Finished')
 

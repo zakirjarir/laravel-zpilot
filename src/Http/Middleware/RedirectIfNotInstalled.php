@@ -1,6 +1,6 @@
 <?php
 
-namespace ZakirJarir\LaravelInstaller\Http\Middleware;
+namespace ZakirJarir\LaravelZPilot\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
@@ -15,7 +15,7 @@ class RedirectIfNotInstalled
     {
         if (!file_exists(storage_path('installed')) && !$request->is('install') && !$request->is('install/*')) {
             config(['session.driver' => 'file']);
-            return redirect()->route('installer.welcome');
+            return redirect()->route('zpilot.welcome');
         }
 
         return $next($request);

@@ -1,4 +1,4 @@
-@extends('installer::layout')
+@extends('zpilot::layout')
 
 @section('title', 'Welcome')
 
@@ -13,6 +13,6 @@
             </svg>
         </div>
 
-        <a href="{{ route('installer.requirements') }}" class="btn">Get Started</a>
+        <a href="{{ route('zpilot.requirements') }}" class="btn">Get Started</a>
     </div>
 @endsection

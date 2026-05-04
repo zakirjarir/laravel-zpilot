@@ -1,10 +1,10 @@
-# Z-laravel-installer 🚀
+# Laravel ZPilot 🚀
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/zakirjarir/laravel-installer.svg?style=flat-square)](https://packagist.org/packages/zakirjarir/laravel-installer)
-[![Total Downloads](https://img.shields.io/packagist/dt/zakirjarir/laravel-installer.svg?style=flat-square)](https://packagist.org/packages/zakirjarir/laravel-installer)
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/zakirjarir/laravel-zpilot.svg?style=flat-square)](https://packagist.org/packages/zakirjarir/laravel-zpilot)
+[![Total Downloads](https://img.shields.io/packagist/dt/zakirjarir/laravel-zpilot.svg?style=flat-square)](https://packagist.org/packages/zakirjarir/laravel-zpilot)
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE)
 
-**Z-laravel-installer** is an ultra-modern, intelligent, and secure web-based installation wizard for Laravel applications. It simplifies the deployment process by handling everything from system requirements checks to database setup and package configuration in a single click.
+**Laravel ZPilot** is an ultra-modern, intelligent, and secure web-based configuration wizard for Laravel applications. It simplifies the deployment process by handling everything from system requirements checks to database setup and package configuration in a single click.
 
 ---
 
@@ -18,7 +18,7 @@
 - 🤖 **Intelligent Package Setup**: Automatically detects and configures popular Laravel packages including **JWT, Passport, Sanctum, Telescope, Horizon, and Filament**.
 - 🔑 **Auto Key Generation**: Automatically generates the `APP_KEY` and other package-specific secret keys upon successful installation.
 - 🔄 **Unified Installation**: Simplifies the process by combining migrations, seeding, and key generation into a single-step workflow.
-- 🔒 **Auto-Lock System**: For security, the installer automatically locks itself (returning a 404 error) after completion to prevent unauthorized access.
+- 🔒 **Auto-Lock System**: For security, the ZPilot automatically locks itself (returning a 404 error) after completion to prevent unauthorized access.
 - 📱 **Fully Responsive**: Optimized for seamless performance on all devices including Mobile, Tablet, and Desktop.
 
 ---
@@ -35,7 +35,7 @@
 Install the package into your Laravel project using the following command:
 
 ```bash
-composer require zakirjarir/laravel-installer
+composer require zakirjarir/laravel-zpilot
 ```
 
 ---
@@ -46,7 +46,7 @@ After installation, visit the following URL in your browser:
 
 `http://your-app.test/install`
 
-The installer will guide you through:
+The ZPilot will guide you through:
 1. **Welcome Screen**
 2. **Server Requirements Check** (Dynamic Detection)
 3. **Dynamic Environment Setup** (Auto-detect from .env.example)

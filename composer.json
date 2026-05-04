@@ -1,6 +1,6 @@
 {
-    "name": "zakirjarir/laravel-installer",
-    "description": "An ultra-modern, intelligent, and secure web-based installation wizard for Laravel applications with a premium glassmorphism UI.",
+    "name": "zakirjarir/laravel-zpilot",
+    "description": "Laravel ZPilot: An ultra-modern, intelligent, and secure web-based configuration wizard for Laravel applications with a premium glassmorphism UI.",
     "type": "library",
     "license": "MIT",
     "authors": [
@@ -13,8 +13,9 @@
     ],
     "keywords": [
         "laravel",
-        "installer",
+        "zpilot",
         "setup",
+        "configurator",
         "wizard",
         "gui",
         "environment",
@@ -26,13 +27,13 @@
     },
     "autoload": {
         "psr-4": {
-            "ZakirJarir\\LaravelInstaller\\": "src/"
+            "ZakirJarir\\LaravelZPilot\\": "src/"
         }
     },
     "extra": {
         "laravel": {
             "providers": [
-                "ZakirJarir\\LaravelInstaller\\InstallerServiceProvider"
+                "ZakirJarir\\LaravelZPilot\\ZPilotServiceProvider"
             ]
         }
     }

@@ -1,9 +1,9 @@
-@extends('installer::layout')
+@extends('zpilot::layout')
 
 @section('title', 'Environment Setup')
 
 <style>
-    .installer-container { max-width: 850px !important; } /* Increasing width for this page */
+    .zpilot-container { max-width: 850px !important; } /* Increasing width for this page */
     .env-row {
         display: flex;
         align-items: center;
@@ -37,7 +37,7 @@
     <h2>Environment Configuration</h2>
     <p>Please provide the values for your application environment. These were detected from your <code>.env.example</code>.</p>
 
-    <form action="{{ route('installer.saveEnvironment') }}" method="POST">
+    <form action="{{ route('zpilot.saveEnvironment') }}" method="POST">
         @csrf
         
         <div class="env-list">
@@ -59,7 +59,7 @@
         </div>
 
         <div class="btn-group">
-            <a href="{{ route('installer.requirements') }}" class="btn btn-back">Back</a>
+            <a href="{{ route('zpilot.requirements') }}" class="btn btn-back">Back</a>
             <button type="submit" class="btn">Save & Continue</button>
         </div>
     </form>

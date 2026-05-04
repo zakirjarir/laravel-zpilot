@@ -1,17 +1,17 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use ZakirJarir\LaravelInstaller\Http\Controllers\InstallerController;
+use ZakirJarir\LaravelZPilot\Http\Controllers\ZPilotController;
 
 
 
 
 Route::group(['prefix' => 'install', 'middleware' => ['web']], function () {
-    Route::get('/', [InstallerController::class, 'welcome'])->name('installer.welcome');
-    Route::get('/requirements', [InstallerController::class, 'requirements'])->name('installer.requirements');
-    Route::get('/environment', [InstallerController::class, 'environment'])->name('installer.environment');
-    Route::post('/environment/save', [InstallerController::class, 'saveEnvironment'])->name('installer.saveEnvironment');
-    Route::get('/database', [InstallerController::class, 'database'])->name('installer.database');
-    Route::post('/database/install', [InstallerController::class, 'runInstallation'])->name('installer.runInstallation');
-    Route::get('/finish', [InstallerController::class, 'finish'])->name('installer.finish');
+    Route::get('/', [ZPilotController::class, 'welcome'])->name('zpilot.welcome');
+    Route::get('/requirements', [ZPilotController::class, 'requirements'])->name('zpilot.requirements');
+    Route::get('/environment', [ZPilotController::class, 'environment'])->name('zpilot.environment');
+    Route::post('/environment/save', [ZPilotController::class, 'saveEnvironment'])->name('zpilot.saveEnvironment');
+    Route::get('/database', [ZPilotController::class, 'database'])->name('zpilot.database');
+    Route::post('/database/install', [ZPilotController::class, 'runInstallation'])->name('zpilot.runInstallation');
+    Route::get('/finish', [ZPilotController::class, 'finish'])->name('zpilot.finish');
 });

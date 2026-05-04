@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Laravel Installer | @yield('title')</title>
+    <title>Laravel ZPilot | @yield('title')</title>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -41,7 +41,7 @@
             line-height: 1.5;
         }
 
-        .installer-container {
+        .zpilot-container {
             width: 100%;
             max-width: 650px;
             background: var(--card-bg);
@@ -304,9 +304,9 @@
         <div class="loading-text">Processing, please wait...</div>
     </div>
 
-    <div class="installer-container">
+    <div class="zpilot-container">
         <div class="header">
-            <div class="logo">Z-laravel-installer</div>
+            <div class="logo">Laravel ZPilot</div>
             <div class="steps">
                 <div class="step {{ Request::is('install') ? 'active' : 'completed' }}">1</div>
                 <div class="step {{ Request::is('install/requirements') ? 'active' : (Request::is('install') ? '' : 'completed') }}">2</div>

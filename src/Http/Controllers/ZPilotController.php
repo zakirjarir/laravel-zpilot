@@ -1,16 +1,16 @@
 <?php
 
-namespace ZakirJarir\LaravelInstaller\Http\Controllers;
+namespace ZakirJarir\LaravelZPilot\Http\Controllers;
 
 use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Config;
-use ZakirJarir\LaravelInstaller\Helpers\EnvironmentManager;
-use ZakirJarir\LaravelInstaller\Helpers\RequirementsChecker;
+use ZakirJarir\LaravelZPilot\Helpers\EnvironmentManager;
+use ZakirJarir\LaravelZPilot\Helpers\RequirementsChecker;
 
-class InstallerController extends Controller
+class ZPilotController extends Controller
 {
     protected $environmentManager;
     protected $requirementsChecker;
@@ -28,7 +28,7 @@ class InstallerController extends Controller
 
     public function welcome()
     {
-        return view('installer::welcome');
+        return view('zpilot::welcome');
     }
 
     public function requirements()
@@ -42,13 +42,13 @@ class InstallerController extends Controller
             'bootstrap/cache/'       => '775',
         ]);
 
-        return view('installer::requirements', compact('requirements', 'permissions'));
+        return view('zpilot::requirements', compact('requirements', 'permissions'));
     }
 
     public function environment()
     {
         $envValues = $this->environmentManager->getEnvExampleValues();
-        return view('installer::environment', compact('envValues'));
+        return view('zpilot::environment', compact('envValues'));
     }
 
     public function saveEnvironment(Request $request)
@@ -67,7 +67,7 @@ class InstallerController extends Controller
         $result = $this->environmentManager->saveFileWizard($request);
         
         if ($result === "Success") {
-            return redirect()->route('installer.database');
+            return redirect()->route('zpilot.database');
         }
 
         return back()->with(['message' => $result]);
@@ -101,7 +101,7 @@ class InstallerController extends Controller
     public function database()
     {
         $detectedPackages = $this->detectSetupRequiredPackages();
-        return view('installer::process', compact('detectedPackages'));
+        return view('zpilot::process', compact('detectedPackages'));
     }
 
     private function detectSetupRequiredPackages()
@@ -158,7 +158,7 @@ class InstallerController extends Controller
                 }
             }
 
-            return redirect()->route('installer.finish');
+            return redirect()->route('zpilot.finish');
         } catch (\Illuminate\Database\QueryException $e) {
             $errorCode = $e->errorInfo[1] ?? null;
             if ($errorCode == 1062) {
@@ -193,6 +193,6 @@ class InstallerController extends Controller
     public function finish()
     {
         file_put_contents(storage_path('installed'), '');
-        return view('installer::finish');
+        return view('zpilot::finish');
     }
 }

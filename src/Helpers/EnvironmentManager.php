@@ -1,6 +1,6 @@
 <?php
 
-namespace ZakirJarir\LaravelInstaller\Helpers;
+namespace ZakirJarir\LaravelZPilot\Helpers;
 
 use Exception;
 use Illuminate\Http\Request;

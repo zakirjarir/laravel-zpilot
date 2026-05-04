@@ -1,4 +1,4 @@
-@extends('installer::layout')
+@extends('zpilot::layout')
 
 @section('title', 'Database Installation')
 
@@ -7,7 +7,7 @@
         <h2>Finalizing Installation</h2>
         <p>Your environment and database connection are configured. Now we will set up the tables and initial data.</p>
         
-        <form action="{{ route('installer.runInstallation') }}" method="POST">
+        <form action="{{ route('zpilot.runInstallation') }}" method="POST">
             @csrf
             <div style="background: rgba(255,255,255,0.05); padding: 25px; border-radius: 20px; margin: 30px 0; text-align: left; border: 1px solid var(--border);">
                 <div style="display: flex; align-items: center; margin-bottom: 20px;">
@@ -64,7 +64,7 @@
             </div>
 
             <div class="btn-group">
-                <a href="{{ route('installer.environment') }}" class="btn btn-back">Back</a>
+                <a href="{{ route('zpilot.environment') }}" class="btn btn-back">Back</a>
                 <button type="submit" class="btn">Start Installation</button>
             </div>
             <p style="margin-top: 15px; font-size: 0.85rem;">This may take a few seconds...</p>

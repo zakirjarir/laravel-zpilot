@@ -1,4 +1,4 @@
-@extends('installer::layout')
+@extends('zpilot::layout')
 
 @section('title', 'Server Requirements')
 
@@ -46,16 +46,16 @@
 
     @if($allRequirementsMet)
         <div class="btn-group">
-            <a href="{{ route('installer.welcome') }}" class="btn btn-back">Back</a>
-            <a href="{{ route('installer.environment') }}" class="btn">Continue</a>
+            <a href="{{ route('zpilot.welcome') }}" class="btn btn-back">Back</a>
+            <a href="{{ route('zpilot.environment') }}" class="btn">Continue</a>
         </div>
     @else
         <div class="alert alert-error">
             Please fix the requirements/permissions issues above to continue.
         </div>
         <div class="btn-group">
-            <a href="{{ route('installer.welcome') }}" class="btn btn-back">Back</a>
-            <a href="{{ route('installer.requirements') }}" class="btn">Check Again</a>
+            <a href="{{ route('zpilot.welcome') }}" class="btn btn-back">Back</a>
+            <a href="{{ route('zpilot.requirements') }}" class="btn">Check Again</a>
         </div>
     @endif
 @endsection

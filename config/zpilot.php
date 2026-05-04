@@ -4,10 +4,10 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Laravel Installer Configuration
+    | Laravel ZPilot Configuration
     |--------------------------------------------------------------------------
     |
-    | Here you can configure the installer settings.
+    | Here you can configure the ZPilot settings.
     |
     */
 

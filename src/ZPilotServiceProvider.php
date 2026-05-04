@@ -1,10 +1,10 @@
 <?php
 
-namespace ZakirJarir\LaravelInstaller;
+namespace ZakirJarir\LaravelZPilot;
 
 use Illuminate\Support\ServiceProvider;
 
-class InstallerServiceProvider extends ServiceProvider
+class ZPilotServiceProvider extends ServiceProvider
 {
     /**
      * Register services.
@@ -14,7 +14,7 @@ class InstallerServiceProvider extends ServiceProvider
     public function register()
     {
         $this->mergeConfigFrom(
-            __DIR__ . '/../config/installer.php', 'installer'
+            __DIR__ . '/../config/zpilot.php', 'zpilot'
         );
     }
 
@@ -30,23 +30,23 @@ class InstallerServiceProvider extends ServiceProvider
             config(['session.driver' => 'file']);
         }
 
-        // Automatically redirect to installer if not installed
-        $router->pushMiddlewareToGroup('web', \ZakirJarir\LaravelInstaller\Http\Middleware\RedirectIfNotInstalled::class);
+        // Automatically redirect to ZPilot if not installed
+        $router->pushMiddlewareToGroup('web', \ZakirJarir\LaravelZPilot\Http\Middleware\RedirectIfNotInstalled::class);
 
         // Ensure .env exists to prevent application crash
-        $envManager = new \ZakirJarir\LaravelInstaller\Helpers\EnvironmentManager();
+        $envManager = new \ZakirJarir\LaravelZPilot\Helpers\EnvironmentManager();
         $envManager->ensureEnvExists();
 
         $this->loadRoutesFrom(__DIR__ . '/routes/web.php');
-        $this->loadViewsFrom(__DIR__ . '/views', 'installer');
+        $this->loadViewsFrom(__DIR__ . '/views', 'zpilot');
         $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
 
         $this->publishes([
-            __DIR__ . '/../config/installer.php' => config_path('installer.php'),
-        ], 'installer-config');
+            __DIR__ . '/../config/zpilot.php' => config_path('zpilot.php'),
+        ], 'zpilot-config');
 
         $this->publishes([
-            __DIR__ . '/views' => resource_path('views/vendor/installer'),
-        ], 'installer-views');
+            __DIR__ . '/views' => resource_path('views/vendor/zpilot'),
+        ], 'zpilot-views');
     }
 }

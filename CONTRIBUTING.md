@@ -1,4 +1,4 @@
-# Contributing to Laravel Installer GUI
+# Contributing to Laravel ZPilot
 
 First off, thank you for considering contributing to this package! It's people like you who make the open-source community such an amazing place.
 
