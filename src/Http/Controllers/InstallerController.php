@@ -130,18 +130,28 @@ class InstallerController extends Controller
     public function runInstallation(Request $request)
     {
         try {
-            // 1. Run Migrations
-            Artisan::call('migrate', ['--force' => true]);
+            // 1. Ensure Database Exists (Fallback)
+            $dbName = config('database.connections.' . config('database.default') . '.database');
+            if ($dbName) {
+                $this->ensureDatabaseExists($dbName);
+            }
+
+            // 2. Run Migrations
+            if ($request->has('fresh_install')) {
+                Artisan::call('migrate:fresh', ['--force' => true]);
+            } else {
+                Artisan::call('migrate', ['--force' => true]);
+            }
             
-            // 2. Run Seeders if requested
+            // 3. Run Seeders if requested
             if ($request->has('run_seed')) {
                 Artisan::call('db:seed', ['--force' => true]);
             }
 
-            // 3. Generate Application Key
+            // 4. Generate Application Key
             Artisan::call('key:generate', ['--force' => true]);
 
-            // 4. Run Detected Package Commands (JWT, Passport, etc.)
+            // 5. Run Detected Package Commands (JWT, Passport, etc.)
             if ($request->has('setup_packages')) {
                 foreach ($request->setup_packages as $command) {
                     Artisan::call($command, ['--force' => true]);
@@ -152,11 +162,31 @@ class InstallerController extends Controller
         } catch (\Illuminate\Database\QueryException $e) {
             $errorCode = $e->errorInfo[1] ?? null;
             if ($errorCode == 1062) {
-                return back()->with(['message' => 'Installation failed: Data already exists (Duplicate Entry). Please clear your database or skip seeding.']);
+                return back()->with(['message' => 'Installation failed: Data already exists (Duplicate Entry). Please clear your database manually or select "Fresh Installation" to wipe and re-run.']);
             }
             return back()->with(['message' => 'Database error: ' . $e->getMessage()]);
         } catch (\Exception $e) {
             return back()->with(['message' => 'Installation failed: ' . $e->getMessage()]);
+        }
+    }
+
+    private function ensureDatabaseExists($dbName)
+    {
+        try {
+            DB::connection()->getPdo();
+        } catch (\Exception $e) {
+            // If connection fails, try to create it using 'setup' connection pattern
+            // We need to temporarily set the config without the database name to connect to the server
+            $config = config('database.connections.' . config('database.default'));
+            $setupConfig = $config;
+            $setupConfig['database'] = null;
+            
+            config(['database.connections.setup_temp' => $setupConfig]);
+            DB::purge('setup_temp');
+            
+            $pdo = DB::connection('setup_temp')->getPdo();
+            $pdo->exec("CREATE DATABASE IF NOT EXISTS `$dbName` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;");
+            DB::purge(config('database.default'));
         }
     }
 

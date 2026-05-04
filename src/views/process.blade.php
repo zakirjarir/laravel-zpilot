@@ -47,7 +47,17 @@
                     @endforeach
                 @endif
                 
-                <div style="margin-top: 10px; display: flex; align-items: center; cursor: pointer;">
+                <div style="margin-top: 20px; padding-top: 15px; border-top: 1px solid rgba(255,255,255,0.05);">
+                    <div style="display: flex; align-items: flex-start; cursor: pointer;">
+                        <input type="checkbox" name="fresh_install" id="fresh_install" style="width: 20px; height: 20px; margin-right: 15px; accent-color: var(--primary); margin-top: 3px;">
+                        <div>
+                            <label for="fresh_install" style="color: #fff; font-weight: 600; cursor: pointer; margin-bottom: 2px; display: block;">Fresh Installation</label>
+                            <span style="color: var(--text-muted); font-size: 0.75rem; display: block;">Wipe all existing tables and data before installing. <span style="color: var(--danger);">Warning: This cannot be undone.</span></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="margin-top: 15px; display: flex; align-items: center; cursor: pointer;">
                     <input type="checkbox" name="run_seed" id="seed" checked style="width: 20px; height: 20px; margin-right: 15px; accent-color: var(--primary);">
                     <label for="seed" style="color: #fff; font-weight: 500; cursor: pointer;">Run Database Seeders (Recommended)</label>
                 </div>
