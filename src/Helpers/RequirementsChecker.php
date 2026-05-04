@@ -9,7 +9,7 @@ class RequirementsChecker
      *
      * @var string
      */
-    private $minPhpVersion = '8.1.0';
+    private $minPhpVersion = '7.4.0';
 
     /**
      * Get requirements from composer.json.
@@ -21,7 +21,7 @@ class RequirementsChecker
         $composerPath = base_path('composer.json');
         if (!file_exists($composerPath)) {
             return [
-                'php' => '8.1.0',
+                'php' => '7.4.0',
                 'extensions' => ['openssl', 'pdo', 'mbstring', 'tokenizer', 'JSON', 'cURL']
             ];
         }
@@ -29,13 +29,13 @@ class RequirementsChecker
         $composer = json_decode(file_get_contents($composerPath), true);
         $requires = $composer['require'] ?? [];
         
-        $phpVersion = '8.1.0';
+        $phpVersion = '7.4.0';
         $extensions = ['openssl', 'pdo', 'mbstring', 'tokenizer', 'JSON', 'cURL'];
 
         foreach ($requires as $package => $version) {
             if ($package === 'php') {
                 $phpVersion = str_replace(['^', '>=', '>'], '', $version);
-            } elseif (str_starts_with($package, 'ext-')) {
+            } elseif (strpos($package, 'ext-') === 0) {
                 $extensions[] = str_replace('ext-', '', $package);
             }
         }
@@ -55,7 +55,7 @@ class RequirementsChecker
     public function check(array $requirements)
     {
         $results = [];
-        $minPhp = $requirements['php'] ?? '8.1.0';
+        $minPhp = $requirements['php'] ?? '7.4.0';
 
         $results['php'] = [
             'full' => phpversion(),

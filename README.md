@@ -4,7 +4,7 @@
 [![Total Downloads](https://img.shields.io/packagist/dt/zakirjarir/laravel-installer.svg?style=flat-square)](https://packagist.org/packages/zakirjarir/laravel-installer)
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE)
 
-**Z-laravel-installer** is an ultra-modern, intelligent web-based installation wizard for Laravel applications. It simplifies the deployment process by handling everything from system requirements checks to database setup and package configuration in a single click.
+**Z-laravel-installer** is an ultra-modern, intelligent, and secure web-based installation wizard for Laravel applications. It simplifies the deployment process by handling everything from system requirements checks to database setup and package configuration in a single click.
 
 ---
 
@@ -20,6 +20,13 @@
 - 🔄 **Unified Installation**: Simplifies the process by combining migrations, seeding, and key generation into a single-step workflow.
 - 🔒 **Auto-Lock System**: For security, the installer automatically locks itself (returning a 404 error) after completion to prevent unauthorized access.
 - 📱 **Fully Responsive**: Optimized for seamless performance on all devices including Mobile, Tablet, and Desktop.
+
+---
+
+## 📋 Requirements
+
+- **PHP**: `^7.4` or `^8.0`
+- **Laravel**: `^8.0`, `^9.0`, `^10.0`, `^11.0`, `^12.0`, `^13.0`
 
 ---
 

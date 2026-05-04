@@ -76,7 +76,7 @@ class EnvironmentManager
         $values = [];
 
         foreach ($lines as $line) {
-            if (str_starts_with($line, '#') || !str_contains($line, '=')) {
+            if (strpos($line, '#') === 0 || strpos($line, '=') === false) {
                 continue;
             }
 
@@ -104,7 +104,7 @@ class EnvironmentManager
                 $value = 'base64:' . base64_encode(random_bytes(32));
             }
 
-            if (str_contains($value, ' ') || str_contains($value, '#')) {
+            if (strpos($value, ' ') !== false || strpos($value, '#') !== false) {
                 $value = '"' . $value . '"';
             }
 
