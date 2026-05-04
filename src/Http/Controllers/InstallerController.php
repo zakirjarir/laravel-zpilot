@@ -149,6 +149,12 @@ class InstallerController extends Controller
             }
 
             return redirect()->route('installer.finish');
+        } catch (\Illuminate\Database\QueryException $e) {
+            $errorCode = $e->errorInfo[1] ?? null;
+            if ($errorCode == 1062) {
+                return back()->with(['message' => 'Installation failed: Data already exists (Duplicate Entry). Please clear your database or skip seeding.']);
+            }
+            return back()->with(['message' => 'Database error: ' . $e->getMessage()]);
         } catch (\Exception $e) {
             return back()->with(['message' => 'Installation failed: ' . $e->getMessage()]);
         }
