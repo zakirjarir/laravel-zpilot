@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use ZakirJarir\LaravelInstaller\Http\Controllers\InstallerController;
 
+// Route
+
 Route::group(['prefix' => 'install', 'middleware' => ['web']], function () {
     Route::get('/', [InstallerController::class, 'welcome'])->name('installer.welcome');
     Route::get('/requirements', [InstallerController::class, 'requirements'])->name('installer.requirements');
