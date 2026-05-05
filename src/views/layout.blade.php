@@ -304,7 +304,7 @@
 <body>
     <div class="loading-overlay" id="loadingOverlay">
         <div class="spinner"></div>
-        <div class="loading-text">Processing, please wait...</div>
+        <div class="loading-text">{{ __('zpilot::install.processing') }}</div>
     </div>
 
     <div class="zpilot-container">

@@ -4,8 +4,8 @@
 
 @section('content')
     <div style="text-align: center;">
-        <h2>Welcome to the Setup Wizard</h2>
-        <p>This wizard will help you configure your Laravel application easily. We'll set up your environment variables, database, and seeders.</p>
+        <h2>{{ __('zpilot::install.setup_wizard') }}</h2>
+        <p>{{ __('zpilot::install.setup_wizard_desc') }}</p>
         
         <div style="margin: 30px 0;">
             <svg style="width: 80px; height: 80px; color: var(--primary);" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -13,6 +13,6 @@
             </svg>
         </div>
 
-        <a href="{{ route('zpilot.requirements') }}" class="btn">Get Started</a>
+        <a href="{{ route('zpilot.requirements') }}" class="btn">{{ __('zpilot::install.continue') }}</a>
     </div>
 @endsection

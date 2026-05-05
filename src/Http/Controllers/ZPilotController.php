@@ -40,6 +40,7 @@ class ZPilotController extends Controller
             'storage/framework/'     => '775',
             'storage/logs/'          => '775',
             'bootstrap/cache/'       => '775',
+            'public/'                => '775',
         ]);
 
         return view('zpilot::requirements', compact('requirements', 'permissions'));
@@ -151,7 +152,10 @@ class ZPilotController extends Controller
             // 4. Generate Application Key
             Artisan::call('key:generate', ['--force' => true]);
 
-            // 5. Run Detected Package Commands (JWT, Passport, etc.)
+            // 5. Create Storage Link
+            Artisan::call('storage:link');
+
+            // 6. Run Detected Package Commands (JWT, Passport, etc.)
             if ($request->has('setup_packages')) {
                 foreach ($request->setup_packages as $command) {
                     Artisan::call($command, ['--force' => true]);

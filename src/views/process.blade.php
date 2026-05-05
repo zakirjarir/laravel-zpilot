@@ -27,6 +27,15 @@
                     </div>
                     <span style="color: #fff; font-weight: 600;">Generate Application Key</span>
                 </div>
+                
+                <div style="display: flex; align-items: center; margin-bottom: 20px;">
+                    <div style="width: 24px; height: 24px; background: var(--success); border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-right: 15px;">
+                        <svg style="width: 14px; height: 14px; color: #fff;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                    </div>
+                    <span style="color: #fff; font-weight: 600;">Create Storage Link</span>
+                </div>
 
                 @if(count($detectedPackages) > 0)
                     <div style="margin: 25px 0 15px; color: var(--text-muted); font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; opacity: 0.8;">Detected Packages</div>

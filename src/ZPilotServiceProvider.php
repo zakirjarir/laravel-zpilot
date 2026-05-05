@@ -40,6 +40,7 @@ class ZPilotServiceProvider extends ServiceProvider
         $this->loadRoutesFrom(__DIR__ . '/routes/web.php');
         $this->loadViewsFrom(__DIR__ . '/views', 'zpilot');
         $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
+        $this->loadTranslationsFrom(__DIR__ . '/lang', 'zpilot');
 
         $this->publishes([
             __DIR__ . '/../config/zpilot.php' => config_path('zpilot.php'),

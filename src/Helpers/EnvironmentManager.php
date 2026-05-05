@@ -89,6 +89,7 @@ class EnvironmentManager
 
     /**
      * Save the edited content to the .env file dynamically.
+     * This method is non-destructive and preserves existing comments and formatting.
      *
      * @param Request $input
      * @return string
@@ -96,25 +97,37 @@ class EnvironmentManager
     public function saveFileWizard(Request $input)
     {
         $data = $input->except(['_token']);
-        $envContent = "";
-
-        foreach ($data as $key => $value) {
-            // Special handling for keys that might need quotes or generation
-            if ($key === 'APP_KEY' && empty($value)) {
-                $value = 'base64:' . base64_encode(random_bytes(32));
-            }
-
-            if (strpos($value, ' ') !== false || strpos($value, '#') !== false) {
-                $value = '"' . $value . '"';
-            }
-
-            $envContent .= "{$key}={$value}\n";
-        }
-
+        
         try {
-            file_put_contents($this->envPath, $envContent);
+            $content = $this->getEnvContent();
+            
+            foreach ($data as $key => $value) {
+                $key = strtoupper($key);
+                
+                // Special handling for APP_KEY if empty
+                if ($key === 'APP_KEY' && empty($value)) {
+                    $value = 'base64:' . base64_encode(random_bytes(32));
+                }
+
+                // Handle quotes for values with spaces or special characters
+                if ($value !== null && (strpos($value, ' ') !== false || strpos($value, '#') !== false)) {
+                    $value = '"' . str_replace('"', '\"', $value) . '"';
+                }
+
+                $keyValue = "{$key}={$value}";
+
+                $pattern = "/^" . preg_quote($key, '/') . "=.*/m";
+
+                if (preg_match("/^" . preg_quote($key, '/') . "=/m", $content)) {
+                    $content = preg_replace($pattern, $keyValue, $content);
+                } else {
+                    $content .= "\n{$keyValue}";
+                }
+            }
+
+            file_put_contents($this->envPath, trim($content) . "\n");
         } catch (Exception $e) {
-            return "Unable to save the .env file, please check permissions.";
+            return "Unable to save the .env file: " . $e->getMessage();
         }
 
         return "Success";
