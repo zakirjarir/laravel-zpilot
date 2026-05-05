@@ -10,13 +10,13 @@
             </svg>
         </div>
         
-        <h2>{{ __('zpilot::install.finish') }}</h2>
-        <p>{{ __('zpilot::install.finish_desc') }}</p>
+        <h2>Installation Complete!</h2>
+        <p>Your application is now configured and ready to use. You can now access your application.</p>
         
         <div class="alert alert-success">
-            {{ __('zpilot::install.finish_success') }}
+            The .env file has been updated and migrations have been executed.
         </div>
 
-        <a href="/" class="btn">{{ __('zpilot::install.go_to_app') }}</a>
+        <a href="/" class="btn">Go to Application</a>
     </div>
 @endsection
